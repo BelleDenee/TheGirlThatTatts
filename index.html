@@ -38,7 +38,6 @@
       position: relative;
     }
 
-    /* Book Appointment button styling */
     .book-button {
       font-family: 'Great Vibes', cursive;
       font-size: 2.4rem;
@@ -85,7 +84,6 @@
       position: relative;
     }
 
-    /* Dropdown styles */
     .dropdown-wrapper {
       margin: 2rem auto 0;
       max-width: 360px;
@@ -129,7 +127,6 @@
       color: #ff66cc;
     }
 
-    /* Paisley Decorations */
     .paisley-left,
     .paisley-right {
       position: absolute;
@@ -186,10 +183,9 @@
   <!-- Page Header -->
   <header>TheGirlThatTatts</header>
 
-  <!-- Button styled like dropdown -->
+  <!-- Book Appointment Button -->
   <div class="button-wrapper">
-    <!-- LINK TO booking.html -->
-    <a href="booking.html" class="book-button" role="button" aria-label="Book Appointment">Book Appointment</a>
+    <a href="booking.html" class="book-button">Book Appointment</a>
   </div>
 
   <!-- Bio / Intro -->
@@ -199,13 +195,11 @@
     Located at BlackDiamondInk in Seguin, Tx.
   </p>
 
-  <!-- Dropdown -->
+  <!-- Dropdown (Instagram only) -->
   <div class="dropdown-wrapper">
-    <select aria-label="View Artist Work" onchange="if(this.value) window.location.href=this.value;">
+    <select aria-label="View Artist Work" onchange="if(this.value) window.open(this.value, '_blank')">
       <option selected disabled>View Artist Work</option>
-      <option value="#gallery">Gallery</option>
-      <option value="https://instagram.com/thegirlthattatts" target="_blank">Instagram</option>
-      <option value="https://thegirlthattatts.com/portfolio">Portfolio Page</option>
+      <option value="https://instagram.com/thegirlthattatts">Instagram</option>
     </select>
   </div>
 
