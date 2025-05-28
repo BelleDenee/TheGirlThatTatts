@@ -2,149 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Booking - TheGirlThatTatts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book an Appointment – TheGirlThatTatts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap" rel="stylesheet" />
   <style>
     body {
       background-color: #000;
       color: #fff;
-      font-family: 'Arial Black', Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
+      padding: 2rem;
       text-align: center;
-      padding: 2rem 1rem;
     }
+
     header {
       font-family: 'Great Vibes', cursive;
       font-size: 3rem;
       color: #e60073;
+      text-shadow: 0 0 6px #e60073, 0 0 10px #ff66cc;
       margin-bottom: 2rem;
-      text-shadow: 0 0 8px #e60073;
     }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #ff0099;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(255, 0, 153, 0.3);
+    }
+
     label {
       display: block;
       margin: 1rem 0 0.5rem;
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.6rem;
-      letter-spacing: 0.1em;
-      color: #e60073;
+      font-weight: bold;
+      text-align: left;
     }
-    input, select, button {
-      font-size: 1.4rem;
-      padding: 0.6rem;
-      border-radius: 8px;
-      border: 2px solid #ff0099;
+
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ff66cc;
+      border-radius: 6px;
+      background: #111;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 1.5rem;
       background: #000;
       color: #e60073;
-      width: 80%;
-      max-width: 350px;
-      margin: 0 auto;
-      display: block;
-      text-align: center;
       font-family: 'Great Vibes', cursive;
-      letter-spacing: 0.1em;
-    }
-    button {
+      font-size: 2rem;
+      padding: 0.6rem 2rem;
+      border: 2px solid #ff0099;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 1.5rem;
-      box-shadow: 0 0 12px #ff66cc;
-      transition: box-shadow 0.3s ease;
+      text-shadow: 0 0 5px #e60073;
+      transition: all 0.3s ease;
     }
+
     button:hover {
-      box-shadow: 0 0 20px #ff0099;
-    }
-    #confirmation {
-      margin-top: 2rem;
-      font-family: 'Roboto', sans-serif;
-      font-size: 1.2rem;
-      color: #bbb;
-      word-break: break-word;
+      box-shadow: 0 0 12px #ff66cc;
+      color: #ff66cc;
+      border-color: #ff66cc;
     }
   </style>
 </head>
 <body>
+  <header>Book an Appointment</header>
 
-<header>Book Appointment</header>
+  <form action="https://script.google.com/macros/s/AKfycby4xrbjMDExv-raGCPMvvwRyovE_Bzgo8nklYXYwnmy6Kab1wIwhhTVm4NWh5GaZzcl/exec" method="POST">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="Full Name" required />
 
-<form id="bookingForm">
-  <label for="name">Your Name</label>
-  <input type="text" id="name" required placeholder="Enter your name" />
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="Email" required />
 
-  <label for="email">Email</label>
-  <input type="email" id="email" required placeholder="Enter your email" />
+    <label for="date">Preferred Date:</label>
+    <input type="date" id="date" name="Preferred Date" required />
 
-  <label for="date">Choose Date</label>
-  <input type="date" id="date" required min="" />
+    <label for="time">Preferred Time:</label>
+    <input type="time" id="time" name="Preferred Time" required />
 
-  <label for="time">Choose Time</label>
-  <select id="time" required>
-    <option value="" disabled selected>Select a time</option>
-    <option>10:00 AM</option>
-    <option>11:00 AM</option>
-    <option>12:00 PM</option>
-    <option>1:00 PM</option>
-    <option>2:00 PM</option>
-    <option>3:00 PM</option>
-    <option>4:00 PM</option>
-    <option>5:00 PM</option>
-  </select>
+    <label for="details">Tattoo Description / Notes:</label>
+    <textarea id="details" name="Tattoo Details" placeholder="Describe your idea, placement, size, etc."></textarea>
 
-  <button type="submit">Confirm Booking</button>
-</form>
-
-<div id="confirmation" aria-live="polite"></div>
-
-<script>
-  // Set minimum date to today
-  const dateInput = document.getElementById('date');
-  const today = new Date().toISOString().split('T')[0];
-  dateInput.min = today;
-
-  // On form submit:
-  document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name = encodeURIComponent(document.getElementById('name').value.trim());
-    const email = encodeURIComponent(document.getElementById('email').value.trim());
-    const date = document.getElementById('date').value;
-    const time = encodeURIComponent(document.getElementById('time').value);
-
-    if (!name || !email || !date || !time) {
-      alert('Please fill all fields.');
-      return;
-    }
-
-    // Create a booking "URL" with query parameters
-    const baseUrl = window.location.origin + window.location.pathname;
-    const bookingUrl = `${baseUrl}?name=${name}&email=${email}&date=${date}&time=${time}`;
-
-    // Show confirmation message with the booking URL
-    const confirmationDiv = document.getElementById('confirmation');
-    confirmationDiv.innerHTML = `
-      Thank you, <strong>${decodeURIComponent(name)}</strong>!<br/>
-      Your booking for <strong>${date}</strong> at <strong>${decodeURIComponent(time)}</strong> is recorded.<br/>
-      Save or share this URL as your confirmation:<br/>
-      <a href="${bookingUrl}" target="_blank" rel="noopener">${bookingUrl}</a>
-    `;
-
-    // Optionally clear form or disable it
-    this.reset();
-  });
-
-  // If URL has query params, show booking info on load
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('name') && params.has('date') && params.has('time')) {
-      const name = params.get('name');
-      const date = params.get('date');
-      const time = params.get('time');
-
-      const confirmationDiv = document.getElementById('confirmation');
-      confirmationDiv.innerHTML = `
-        Booking for <strong>${decodeURIComponent(name)}</strong> on <strong>${date}</strong> at <strong>${decodeURIComponent(time)}</strong>.<br/>
-        Thank you for booking with TheGirlThatTatts!
-      `;
-    }
-  });
-</script>
-
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
