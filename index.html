@@ -172,6 +172,98 @@
         letter-spacing: 0.1em;
       }
     }
+
+    /* Sparkle stars container */
+    .sparkle-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    /* Sparkle star style */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      box-shadow: 0 0 6px 2px white;
+      animation: twinkle 2.5s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      0% {
+        opacity: 0.3;
+        transform: scale(0.6);
+        box-shadow: 0 0 4px 1.5px white;
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 8px 3px white;
+      }
+      100% {
+        opacity: 0.3;
+        transform: scale(0.6);
+        box-shadow: 0 0 4px 1.5px white;
+      }
+    }
+
+    /* Shooting star container below header */
+    .shooting-star-container {
+      position: relative;
+      height: 50px;
+      margin-bottom: 1.5rem;
+      overflow: visible;
+      z-index: 3;
+    }
+
+    /* Shooting star */
+    .shooting-star {
+      position: absolute;
+      top: 20px; /* vertical position */
+      left: -60px; /* start off-screen */
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, white, rgba(255,255,255,0));
+      border-radius: 2px;
+      filter: drop-shadow(0 0 4px white);
+      animation: shoot 2s ease forwards;
+    }
+
+    /* Shooting star head */
+    .shooting-star::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      box-shadow:
+        0 0 6px 2px white,
+        0 0 12px 4px #ff66cc;
+    }
+
+    @keyframes shoot {
+      0% {
+        left: -60px;
+        opacity: 1;
+        transform: translateX(0);
+      }
+      100% {
+        left: 110%;
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
   </style>
 </head>
 <body>
@@ -180,8 +272,14 @@
   <div class="paisley-left"></div>
   <div class="paisley-right"></div>
 
+  <!-- Sparkle stars container -->
+  <div class="sparkle-container" id="sparkleContainer"></div>
+
   <!-- Page Header -->
   <header>TheGirlThatTatts</header>
+
+  <!-- Shooting star container below header -->
+  <div class="shooting-star-container" id="shootingStarContainer"></div>
 
   <!-- Book Appointment Button -->
   <div class="button-wrapper">
@@ -202,6 +300,43 @@
       <option value="https://instagram.com/thegirlthattatts">Instagram</option>
     </select>
   </div>
+
+  <script>
+    // Create sparkle stars
+    const container = document.getElementById('sparkleContainer');
+    const sparkleCount = 50;
+
+    for(let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+
+      sparkle.style.top = `${Math.random() * 90 + 5}vh`;
+      sparkle.style.left = `${Math.random() * 90 + 5}vw`;
+      sparkle.style.animationDelay = `${Math.random() * 2.5}s`;
+      const scale = (Math.random() * 0.7) + 0.5;
+      sparkle.style.transform = `scale(${scale})`;
+
+      container.appendChild(sparkle);
+    }
+
+    // Shooting star function
+    const shootingStarContainer = document.getElementById('shootingStarContainer');
+
+    function createShootingStar() {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      shootingStarContainer.appendChild(star);
+
+      // Remove after animation ends (2s)
+      star.addEventListener('animationend', () => {
+        star.remove();
+      });
+    }
+
+    // Launch a shooting star every 25 seconds
+    createShootingStar(); // first star immediately
+    setInterval(createShootingStar, 25000);
+  </script>
 
 </body>
 </html>
